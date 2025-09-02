@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PriceCache } from './cache/price-cache.service';
 import { CoinGeckoProvider } from './provider/coingecko.provider';
 
-type Sym = 'TON' | 'USDT';
+type Symbols = 'TON' | 'USDT';
 
 @Injectable()
 export class PricesService {
@@ -11,7 +11,7 @@ export class PricesService {
     private provider: CoinGeckoProvider,
   ) {}
 
-  async getPair(base: Sym, quote: Sym) {
+  async getPair(base: Symbols, quote: Symbols) {
     if (base === quote) {
       return { price: 1, source: 'derived', asOf: new Date() };
     }
