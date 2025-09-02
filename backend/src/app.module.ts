@@ -13,15 +13,16 @@ import { AppConfigModule } from './config/app-config.module';
     CacheModule.registerAsync({
       isGlobal: true,
       inject: [AppConfigService],
-      useFactory: async (cfg: AppConfigService) => ({
-        ttl: 60,
-        store: await redisStore({
-          socket: {
-            host: cfg.redisHost,
-            port: cfg.redisPort,
-          },
-        }),
-      }),
+      useFactory: async (cfg: AppConfigService) => {
+        const isTest = process.env.NODE_ENV === 'test';
+        if (isTest) {
+          return { ttl: 60 } as const;
+        }
+        const store = await redisStore({
+          socket: { host: cfg.redisHost, port: cfg.redisPort },
+        });
+        return { ttl: 60, store } as const;
+      },
     }),
     PricesModule,
   ],
