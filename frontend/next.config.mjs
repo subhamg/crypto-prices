@@ -8,10 +8,11 @@ const __dirname = path.dirname(__filename);
 const nextConfig = {
   outputFileTracingRoot: path.join(__dirname, ".."),
   async rewrites() {
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:9000";
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:9000/prices/:path*",
+        destination: `${backendUrl}/prices/:path*`,
       },
     ];
   },

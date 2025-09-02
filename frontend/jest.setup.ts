@@ -12,6 +12,8 @@ jest.mock("@mantine/core", () => {
       React.createElement("button", null, children),
     Card: ({ children }: SimpleProps) =>
       React.createElement("div", null, children),
+    Flex: ({ children }: SimpleProps) =>
+      React.createElement("div", null, children),
     Group: ({ children }: SimpleProps) =>
       React.createElement("div", null, children),
     Loader: () => React.createElement("div", null, "Loading…"),

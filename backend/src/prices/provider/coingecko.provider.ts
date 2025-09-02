@@ -3,11 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PriceProvider } from './price-provider.interface';
 import { SimplePriceResponse } from 'src/types/price.type';
 import { AppConfigService } from 'src/config/app-config.service';
-
-const CG_IDS: Record<string, string> = {
-  TON: 'the-open-network',
-  USDT: 'tether',
-};
+import { COINGECKO_IDS, SymbolCode } from '../symbols';
 
 @Injectable()
 export class CoinGeckoProvider implements PriceProvider {
@@ -21,7 +17,7 @@ export class CoinGeckoProvider implements PriceProvider {
       this.configService.coingeckoBase ?? 'https://api.coingecko.com/api/v3';
     const ids = symbols
       .map((s) => {
-        const id = CG_IDS[s];
+        const id = COINGECKO_IDS[s as SymbolCode];
         if (!id) throw new Error(`Unsupported symbol: ${s}`);
         return id;
       })
@@ -35,7 +31,7 @@ export class CoinGeckoProvider implements PriceProvider {
       });
       const out: Record<string, number> = {};
       for (const s of symbols) {
-        const id = CG_IDS[s];
+        const id = COINGECKO_IDS[s as SymbolCode];
         const price = response.data[id]?.usd;
         if (typeof price === 'number') out[s] = price;
       }

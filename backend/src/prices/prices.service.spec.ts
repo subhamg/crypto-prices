@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { PricesService } from './prices.service';
 import { PriceCache } from './cache/price-cache.service';
 import { CoinGeckoProvider } from './provider/coingecko.provider';
+import { PriceSnapshot } from './entities/price-snapshot.entity';
+import { AppConfigService } from 'src/config/app-config.service';
 
 describe('PricesService', () => {
   let service: PricesService;
@@ -16,6 +19,19 @@ describe('PricesService', () => {
         {
           provide: CoinGeckoProvider,
           useValue: { name: 'mock', getUsdPrices: jest.fn() },
+        },
+        {
+          provide: AppConfigService,
+          useValue: { cacheTtlSeconds: 60 },
+        },
+        {
+          provide: getRepositoryToken(PriceSnapshot),
+          useValue: {
+            create: jest.fn((x: PriceSnapshot) => x),
+            save: jest.fn((x) =>
+              Promise.resolve({ ...x, createdAt: new Date() }),
+            ),
+          },
         },
       ],
     }).compile();

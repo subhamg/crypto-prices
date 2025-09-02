@@ -16,6 +16,32 @@ import { AppConfigService } from './app-config.service';
         REDIS_HOST: Joi.string().hostname().required(),
         REDIS_PORT: Joi.number().required(),
         COINGECKO_BASE: Joi.string().uri().required(),
+        CACHE_TTL_SECONDS: Joi.number().min(1).max(1800).default(60),
+        POSTGRES_HOST: Joi.string().when('NODE_ENV', {
+          is: 'test',
+          then: Joi.optional(),
+          otherwise: Joi.required(),
+        }),
+        POSTGRES_PORT: Joi.number().when('NODE_ENV', {
+          is: 'test',
+          then: Joi.optional(),
+          otherwise: Joi.required(),
+        }),
+        POSTGRES_USER: Joi.string().when('NODE_ENV', {
+          is: 'test',
+          then: Joi.optional(),
+          otherwise: Joi.required(),
+        }),
+        POSTGRES_PASSWORD: Joi.string().when('NODE_ENV', {
+          is: 'test',
+          then: Joi.optional(),
+          otherwise: Joi.required(),
+        }),
+        POSTGRES_DB: Joi.string().when('NODE_ENV', {
+          is: 'test',
+          then: Joi.optional(),
+          otherwise: Joi.required(),
+        }),
       }),
     }),
   ],

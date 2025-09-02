@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PricesController } from './prices.controller';
 import { PricesService } from './prices.service';
 import { GetPriceDto } from './dto/get-price.dto';
+import { AppConfigService } from 'src/config/app-config.service';
 
 describe('PricesController', () => {
   let controller: PricesController;
@@ -10,6 +11,7 @@ describe('PricesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PricesController],
       providers: [
+        { provide: AppConfigService, useValue: { cacheTtlSeconds: 60 } },
         {
           provide: PricesService,
           useValue: {

@@ -5,6 +5,7 @@ import { Server } from 'http';
 import { AppModule } from '../src/app.module';
 import { PriceCache } from '../src/prices/cache/price-cache.service';
 import { CoinGeckoProvider } from '../src/prices/provider/coingecko.provider';
+import { AppConfigService } from '../src/config/app-config.service';
 
 describe('Prices (e2e)', () => {
   let app: INestApplication;
@@ -16,6 +17,8 @@ describe('Prices (e2e)', () => {
     })
       .overrideProvider(PriceCache)
       .useValue({ get: jest.fn(), set: jest.fn() })
+      .overrideProvider(AppConfigService)
+      .useValue({ cacheTtlSeconds: 60 })
       .overrideProvider(CoinGeckoProvider)
       .useValue({
         name: 'mock',

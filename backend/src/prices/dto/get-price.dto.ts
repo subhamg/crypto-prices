@@ -1,9 +1,10 @@
 import { IsIn } from 'class-validator';
+import { SUPPORTED_SYMBOLS, type SymbolCode } from '../symbols';
 
 export class GetPriceDto {
-  @IsIn(['TON', 'USDT'])
-  base!: 'TON' | 'USDT';
+  @IsIn(SUPPORTED_SYMBOLS.slice())
+  base!: SymbolCode;
 
-  @IsIn(['TON', 'USDT'])
-  quote!: 'TON' | 'USDT';
+  @IsIn(SUPPORTED_SYMBOLS.slice())
+  quote!: SymbolCode;
 }

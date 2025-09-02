@@ -6,9 +6,11 @@ dist
 *.log
 
 # Env
+!frontend/.env.example
+!backend/.env.example
+!.env.example
 .env
 .env.local
-
 # OS
 .DS_Store
 

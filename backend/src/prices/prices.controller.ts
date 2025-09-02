@@ -1,10 +1,14 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { PricesService } from './prices.service';
 import { GetPriceDto } from './dto/get-price.dto';
+import { AppConfigService } from 'src/config/app-config.service';
 
 @Controller('prices')
 export class PricesController {
-  constructor(private pricesService: PricesService) {}
+  constructor(
+    private pricesService: PricesService,
+    private config: AppConfigService,
+  ) {}
 
   @Get('price')
   async getPrice(@Query() query: GetPriceDto) {
@@ -17,7 +21,7 @@ export class PricesController {
       price,
       source,
       asOf,
-      ttlSeconds: 60,
+      ttlSeconds: this.config.cacheTtlSeconds,
     };
   }
 

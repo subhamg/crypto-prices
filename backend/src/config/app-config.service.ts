@@ -21,4 +21,28 @@ export class AppConfigService {
   get coingeckoBase(): string {
     return this.configService.getOrThrow('COINGECKO_BASE');
   }
+
+  get postgresHost(): string {
+    return this.configService.getOrThrow('POSTGRES_HOST');
+  }
+
+  get postgresPort(): number {
+    return this.configService.getOrThrow('POSTGRES_PORT');
+  }
+
+  get postgresUser(): string {
+    return this.configService.getOrThrow('POSTGRES_USER');
+  }
+
+  get postgresPassword(): string {
+    return this.configService.getOrThrow('POSTGRES_PASSWORD');
+  }
+
+  get postgresDb(): string {
+    return this.configService.getOrThrow('POSTGRES_DB');
+  }
+
+  get cacheTtlSeconds(): number {
+    return this.configService.getOrThrow('CACHE_TTL_SECONDS');
+  }
 }
