@@ -15,6 +15,6 @@ export class PriceCache {
   }
 
   async set(base: string, quote: string, value: number, ttlSeconds = 60) {
-    await this.cache.set(this.key(base, quote), value, ttlSeconds);
+    await this.cache.set(this.key(base, quote), value, ttlSeconds * 1000);
   }
 }

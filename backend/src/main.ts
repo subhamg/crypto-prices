@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+  const port = process.env.PORT ? Number(process.env.PORT) : 9000;
   await app.listen(port);
   console.log(`API on http://localhost:${port}`);
 }

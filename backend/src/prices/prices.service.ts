@@ -17,12 +17,14 @@ export class PricesService {
     }
 
     const cached = await this.cache.get(base, quote);
+    console.log(`cached: ${cached}`);
     if (cached) {
       return { price: cached, source: 'cache', asOf: new Date() };
     }
 
     const usd = await this.provider.getUsdPrices(['TON', 'USDT']);
     const price = usd[base] / usd[quote];
+    console.log(`price: ${price}`);
     await this.cache.set(base, quote, price, 60);
     return { price, source: this.provider.name, asOf: new Date() };
   }
